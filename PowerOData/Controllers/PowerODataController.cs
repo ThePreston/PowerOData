@@ -32,7 +32,7 @@ namespace PowerOData.Controllers
 
         [HttpGet(nameof(GetEmpData))]
         [EnableQuery]
-        public async Task<IActionResult> GetEmpData()
+        public async Task<ActionResult<EmployeeModel>> GetEmpData()
         {
             _logger.LogInformation("Entered GetEmpData");
             try
@@ -50,7 +50,7 @@ namespace PowerOData.Controllers
 
         [HttpGet(nameof(GetProdData))]
         [EnableQuery]
-        public async Task<IActionResult> GetProdData()
+        public async Task<ActionResult<ProductModel>> GetProdData()
         {
             _logger.LogInformation("Entered GetProdData");
             try
@@ -73,9 +73,7 @@ namespace PowerOData.Controllers
             _logger.LogInformation("Entered GetProdEFData");
             try
             {
-                var data = efSvc.GetDataAsQueryable();
-
-                return data is null ? BadRequest(data) : Ok(data);
+                return Ok(efSvc.GetDataAsQueryable());
             }
             catch (Exception ex)
             {
